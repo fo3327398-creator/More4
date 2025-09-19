@@ -1,0 +1,100 @@
+4more
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4More - Super Shop App</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+h2 { text-align: center; margin-bottom: 8px; font-size: 26px; }
+p#desc { text-align: center; font-size: 14px; color: #ddd; margin-bottom: 20px; }
+#query { width: 100%; padding: 15px; border-radius: 12px; border: none; font-size: 16px; margin-bottom: 20px; }
+.card { display: flex; flex-direction: column; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s, opacity 0.2s; }
+.card:hover { transform: scale(1.02); opacity: 0.9; }
+.card-header { display: flex; align-items: center; gap: 10px; }
+.card-header i { font-size: 24px; }
+.card-footer { margin-top: 6px; font-weight: bold; font-size: 14px; display: flex; justify-content: space-between; }
+.daraz { background: #f56a00; }
+.amazon { background: #ff9900; }
+.flipkart { background: #2874f0; }
+.alibaba { background: #f57224; }
+.temu { background: #00bfff; }
+.olx { background: #f7b731; color: #000; }
+.ebay { background: #86b817; color: #000; }
+.store-name { font-weight: bold; font-size: 18px; }
+.type-country { font-weight: normal; font-size: 13px; color: #eee; }
+</style>
+</head>
+<body>
+
+<h2>4More 🛒 Super Shop</h2>
+<p id="desc">4More App - Your smart shopping aggregator, where you can find the cheapest and best stores all in one place!</p>
+
+<input type="text" id="query" placeholder="Search for products...">
+
+<!-- Daraz -->
+<div class="card daraz" onclick="openStore('daraz')">
+  <div class="card-header"><i class="fas fa-shopping-bag"></i> <span class="store-name">Daraz</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">Local | Pakistan</span></div>
+</div>
+
+<!-- Amazon -->
+<div class="card amazon" onclick="openStore('amazon')">
+  <div class="card-header"><i class="fab fa-amazon"></i> <span class="store-name">Amazon</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">International | USA</span></div>
+</div>
+
+<!-- Flipkart -->
+<div class="card flipkart" onclick="openStore('flipkart')">
+  <div class="card-header"><i class="fas fa-store"></i> <span class="store-name">Flipkart</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">Local | India</span></div>
+</div>
+
+<!-- Alibaba -->
+<div class="card alibaba" onclick="openStore('alibaba')">
+  <div class="card-header"><i class="fas fa-globe"></i> <span class="store-name">Alibaba</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">International | China</span></div>
+</div>
+
+<!-- Temu -->
+<div class="card temu" onclick="openStore('temu')">
+  <div class="card-header"><i class="fas fa-tag"></i> <span class="store-name">Temu</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">International | USA</span></div>
+</div>
+
+<!-- OLX -->
+<div class="card olx" onclick="openStore('olx')">
+  <div class="card-header"><i class="fas fa-handshake"></i> <span class="store-name">OLX</span></div>
+  <div class="card-footer"><span>High Prices</span><span class="type-country">Local | Pakistan</span></div>
+</div>
+
+<!-- eBay -->
+<div class="card ebay" onclick="openStore('ebay')">
+  <div class="card-header"><i class="fab fa-ebay"></i> <span class="store-name">eBay</span></div>
+  <div class="card-footer"><span>Low Prices</span><span class="type-country">International | USA</span></div>
+</div>
+
+<script>
+function openStore(store) {
+  let query = encodeURIComponent(document.getElementById('query').value);
+  let url = '';
+  if(store === 'daraz') url = `https://www.daraz.pk/catalog/?q=${query}`;
+  if(store === 'amazon') url = `https://www.amazon.com/s?k=${query}`;
+  if(store === 'flipkart') url = `https://www.flipkart.com/search?q=${query}`;
+  if(store === 'alibaba') url = `https://www.alibaba.com/trade/search?SearchText=${query}`;
+  if(store === 'temu') url = `https://www.temu.com/search_result.html?search_key=${query}`;
+  if(store === 'olx') url = `https://www.olx.com.pk/items/q-${query}`;
+  if(store === 'ebay') url = `https://www.ebay.com/sch/i.html?_nkw=${query}`;
+  location.href = url;  // fast redirect
+}
+</script>
+
+</body>
+</html>
