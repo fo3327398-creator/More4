@@ -1,10 +1,10 @@
-4more
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4More - Super Shop App</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -30,12 +30,19 @@ p#desc { text-align: center; font-size: 14px; color: #ddd; margin-bottom: 20px; 
 .ebay { background: #86b817; color: #000; }
 .store-name { font-weight: bold; font-size: 18px; }
 .type-country { font-weight: normal; font-size: 13px; color: #eee; }
+
+/* Google button */
+#googleBtn { display: flex; justify-content: center; margin: 20px 0; }
 </style>
 </head>
 <body>
 
 <h2>4More 🛒 Super Shop</h2>
 <p id="desc">4More App - Your smart shopping aggregator, where you can find the cheapest and best stores all in one place!</p>
+
+<!-- Google Login Button -->
+<div id="googleBtn"></div>
+<p id="user" style="text-align:center; color:yellow;"></p>
 
 <input type="text" id="query" placeholder="Search for products...">
 
@@ -93,6 +100,34 @@ function openStore(store) {
   if(store === 'olx') url = `https://www.olx.com.pk/items/q-${query}`;
   if(store === 'ebay') url = `https://www.ebay.com/sch/i.html?_nkw=${query}`;
   location.href = url;  // fast redirect
+}
+
+// ✅ Google Login Setup
+window.onload = function () {
+  google.accounts.id.initialize({
+    client_id: "80085467500-22td2b7i20to2nb2l5ka95fdof7esqt3.apps.googleusercontent.com", // <-- yahan apna client id paste karo
+    callback: handleCredentialResponse
+  });
+  google.accounts.id.renderButton(
+    document.getElementById("googleBtn"),
+    { theme: "outline", size: "large" }
+  );
+};
+
+function handleCredentialResponse(response) {
+  // decode token
+  const data = jwt_decode(response.credential);
+  document.getElementById("user").innerText = "Welcome, " + data.name;
+}
+
+// Helper function to decode JWT
+function jwt_decode(token) {
+  let base64Url = token.split('.')[1];
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload);
 }
 </script>
 
